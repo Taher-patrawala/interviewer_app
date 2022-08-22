@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_bloc.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_event.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_state.dart';
+import 'package:interview_app/colors.dart';
 import 'package:interview_app/model/response_model.dart';
 
 class InterviewerItem extends StatelessWidget {
@@ -21,12 +22,22 @@ class InterviewerItem extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              interviewer!.name!.firstName ?? "",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+            BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+              builder: (context, state) {
+                bool isSelected = false;
+                if (state is InterviewerLoadedScreenState) {
+                  isSelected =
+                      state.selectedInterviewers!.contains(interviewer!.cell);
+                }
+                return Text(
+                  interviewer!.name!.firstName ?? "",
+                  style:  TextStyle(
+                    fontSize: 18,
+                    fontWeight: isSelected?FontWeight.w800:FontWeight.w500,
+                    color: isSelected?AppColors.selectedInterviewer:AppColors.titleColor
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 4),
             Text(
@@ -52,7 +63,11 @@ class InterviewerItem extends StatelessWidget {
                     );
               },
               child: Text(
-                isSelected ? "Remove" : "Add",
+                isSelected ? "REMOVE" : "ADD",
+                style: TextStyle(
+                    color: AppColors.titleColor,
+                    fontWeight: FontWeight.w600,
+                    decoration: TextDecoration.underline),
               ),
             );
           },

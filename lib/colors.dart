@@ -9,4 +9,7 @@ class AppColors{
   static Color dimGrey = const Color.fromRGBO(105,105,105,1);
   static Color selectedGreen = const Color.fromRGBO(212,224,224,1);
   static Color selectedBorderGreen = const Color.fromRGBO(39,121,59,1);
+  static Color searchBackground = const Color.fromRGBO(238,239,245,1);
+  static Color selectedInterviewer = const Color.fromRGBO(53,153,240,1);
+  static Color buttonBackground = const Color.fromRGBO(28,134,62,1);
 }
