@@ -14,11 +14,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer(const Duration(seconds: 2), () {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const InterviewerSelection()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const InterviewerSelection()));
     });
   }
 
@@ -26,11 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.splashScreenBackground,
-      body: const Center(
-        child: Text(
-          "CODITAS",
-          style: TextStyle(
-              fontSize: 48, color: Colors.white, fontWeight: FontWeight.w700),
+      body: Center(
+        child: Image.asset(
+          "assets/images/logo.png",
+          scale: 1.06,
         ),
       ),
     );
