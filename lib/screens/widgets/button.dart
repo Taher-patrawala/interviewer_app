@@ -5,11 +5,15 @@ import 'package:interview_app/screens/ratings_screen.dart';
 class Button extends StatelessWidget {
   final Function onTap;
   final bool isDisabled;
+  final String label;
+  final IconData icon;
 
   const Button({
     Key? key,
     required this.onTap,
     required this.isDisabled,
+     this.label = "NEXT",
+     this.icon = Icons.chevron_right,
   }) : super(key: key);
 
   @override
@@ -21,20 +25,21 @@ class Button extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
         decoration: BoxDecoration(
-            color: isDisabled?AppColors.infoColor:AppColors.buttonBackground,
+            color:
+                isDisabled ? AppColors.infoColor : AppColors.buttonBackground,
             borderRadius: BorderRadius.circular(8)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Next",
+              label,
               style: TextStyle(
                   color: isDisabled ? AppColors.dimGrey : Colors.white,
                   fontSize: 18),
             ),
             Icon(
-              Icons.chevron_right,
+              icon,
               color: isDisabled ? AppColors.dimGrey : Colors.white,
               size: 28,
             ),

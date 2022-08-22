@@ -6,6 +6,7 @@ import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
 import 'package:interview_app/colors.dart';
 import 'package:interview_app/model/qualities_model.dart';
 import 'package:interview_app/model/rating_model.dart';
+import 'package:interview_app/screens/widgets/button.dart';
 
 class QualitiesScreen extends StatefulWidget {
   final Rating rating;
@@ -97,33 +98,57 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                 ],
               ),
               Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+                bottom: 24,
+                right: 24,
+                left: 24,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
                         children: const [
                           Icon(Icons.comment_outlined),
                           SizedBox(width: 8),
-                          Text("ADD COMMENT")
+                          Text(
+                            "ADD COMMENT",
+                            style: TextStyle(
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.w700),
+                          )
                         ],
                       ),
-                      FloatingActionButton.extended(
-                        onPressed: () {},
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        icon: const Icon(Icons.chevron_right),
-                        label: const Text("Next"),
-                      )
-                    ],
-                  ),
+                    ),
+                    BlocBuilder<RatingBloc, RatingState>(
+                      builder: (context, state) {
+                        return Button(
+                          label: "SUBMIT",
+                          icon: Icons.check,
+                          isDisabled: false,
+                          onTap: () {
+                            Rating selectedRating = (context
+                                    .read<RatingBloc>()
+                                    .state as SelectRatingState)
+                                .selectedRating!;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    QualitiesScreen(rating: selectedRating),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -173,9 +198,18 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
               ),
             ],
           ),
-          const Text(
-            "Change",
-            style: TextStyle(color: Colors.white),
+          InkWell(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "CHANGE",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+              ),
+            ),
           ),
         ],
       ),
