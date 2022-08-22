@@ -12,4 +12,5 @@ class AppColors{
   static Color searchBackground = const Color.fromRGBO(238,239,245,1);
   static Color selectedInterviewer = const Color.fromRGBO(53,153,240,1);
   static Color buttonBackground = const Color.fromRGBO(28,134,62,1);
+  static Color splashScreenBackground = const Color.fromRGBO(44,147,240,1);
 }

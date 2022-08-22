@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_bloc.dart';
 import 'package:interview_app/screens/interviewer_selection_screen.dart';
+import 'package:interview_app/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InterviewerSelection(),
+      home: SplashScreen(),
     );
   }
 }
