@@ -4,6 +4,7 @@ import 'package:interview_app/bloc/interview_bloc/interview_bloc.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_event.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_state.dart';
 import 'package:interview_app/model/response_model.dart';
+import 'package:interview_app/screens/ratings_screen.dart';
 import 'package:interview_app/screens/widgets/interviewerItem.dart';
 
 class InterviewerSelection extends StatelessWidget {
@@ -11,65 +12,62 @@ class InterviewerSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => InterviewerBloc(),
-      child: Scaffold(
-        body: SafeArea(
-          child: Container(
-            padding: EdgeInsets.only(top: 24, left: 16, right: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Interviewers",
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
-                ),
-                TextFormField(),
-                const SizedBox(height: 16),
-                BlocBuilder<InterviewerBloc, InterviewerScreenState>(
-                  builder: (context, state) {
-                    if (state is InterviewerLoadedScreenState) {
-                      return Text(
-                          "${state.selectedInterviewers!.length} Added");
-                    }
-                    return const Text("0 Added");
-                  },
-                ),
-                const SizedBox(height: 16),
-                BlocBuilder<InterviewerBloc, InterviewerScreenState>(
-                    builder: (context, state) {
-                  if (state is InterviewerLoadingScreenState) {
-                    context.read<InterviewerBloc>().add(GetInterviewerList());
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is InterviewerLoadedScreenState) {
-                    return _buildBody(state.interviewers!);
-                  } else if (state is InterviewerErrorScreenState) {
-                    return Center(
-                      child: Text(state.message.toString()),
-                    );
-                  } else {
-                    return Container();
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Interviewers",
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
+              ),
+              TextFormField(),
+              const SizedBox(height: 16),
+              BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+                builder: (context, state) {
+                  if (state is InterviewerLoadedScreenState) {
+                    return Text(
+                        "${state.selectedInterviewers!.length} Added");
                   }
-                })
-              ],
-            ),
+                  return const Text("0 Added");
+                },
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+                  builder: (context, state) {
+                if (state is InterviewerLoadingScreenState) {
+                  context.read<InterviewerBloc>().add(GetInterviewerList());
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is InterviewerLoadedScreenState) {
+                  return _buildBody(state.interviewers!);
+                } else if (state is InterviewerErrorScreenState) {
+                  return Center(
+                    child: Text(state.message.toString()),
+                  );
+                } else {
+                  return Container();
+                }
+              })
+            ],
           ),
         ),
-        floatingActionButton:
-            BlocBuilder<InterviewerBloc, InterviewerScreenState>(
-          builder: (context, state) {
-            return FloatingActionButton.extended(
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              icon: const Icon(Icons.chevron_right),
-              label: const Text("Next"),
-            );
-          },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const RatingsScreen()),
+          );
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
+        icon: const Icon(Icons.chevron_right),
+        label: const Text("Next"),
       ),
     );
   }
