@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_event.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
+import 'package:interview_app/colors.dart';
 import 'package:interview_app/model/qualities_model.dart';
 import 'package:interview_app/model/rating_model.dart';
 
@@ -20,10 +21,18 @@ class QualitiesScreen extends StatefulWidget {
 
 class _QualitiesScreenState extends State<QualitiesScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<RatingBloc>().add(NavigateToToQualities());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: BlocProvider.of<RatingBloc>(context),
       child: Scaffold(
+        backgroundColor: AppColors.scaffoldBackground,
         body: SafeArea(
           child: Stack(
             children: [
@@ -31,19 +40,30 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 24),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 18, vertical: 24),
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius:
-                            BorderRadius.vertical(bottom: Radius.circular(12))),
+                    decoration: BoxDecoration(
+                        color: AppColors.headerBackground.withOpacity(0.3),
+                        borderRadius: const BorderRadius.vertical(
+                            bottom: Radius.circular(12))),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("You have Rated Your Interviewer"),
+                        Text(
+                          "You have Rated Your Interviewer",
+                          style: TextStyle(
+                              color: AppColors.infoColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 6),
                         Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 8,
                           margin: EdgeInsets.zero,
-                          color: Colors.blue,
+                          color: AppColors.ratingColor,
                           child: _ratingCard(widget.rating),
                         ),
                       ],
@@ -51,14 +71,22 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                   ),
                   Expanded(
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 24),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18, vertical: 24),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text("What made the interview awesome?"),
+                          Text(
+                            "What made the interview awesome?",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.titleColor,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
                           Wrap(
                             children: _buildChoiceList(_createQualities()),
                           )
@@ -73,7 +101,7 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -114,7 +142,7 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
 
   _ratingCard(Rating rating) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +162,7 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                   color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 8),
               Text(
                 rating.description ?? "",
                 style: const TextStyle(
@@ -166,12 +194,14 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
 
             return Container(
               padding: const EdgeInsets.all(2.0),
-              margin: EdgeInsets.symmetric(horizontal: 4),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
               child: ChoiceChip(
                 label: Text(
                   item.name!,
                   style: TextStyle(
-                    color: isSelected ? Colors.green : Colors.black,
+                    color: isSelected
+                        ? AppColors.selectedBorderGreen
+                        : AppColors.dimGrey,
                   ),
                 ),
                 selected: isSelected,
@@ -182,11 +212,15 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                         .add(UpdateQualities(quality: item));
                   }
                 },
-                selectedColor: Colors.greenAccent.withOpacity(0.4),
+                backgroundColor: AppColors.scaffoldBackground,
+                selectedColor: AppColors.selectedGreen,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
                   side: BorderSide(
-                    color: isSelected ? Colors.green : Colors.transparent,
+                    width: 1.5,
+                    color: isSelected
+                        ? AppColors.selectedBorderGreen
+                        : AppColors.dimGrey.withOpacity(0.5),
                   ),
                 ),
               ),

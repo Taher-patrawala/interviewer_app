@@ -68,9 +68,6 @@ class RatingsScreen extends StatelessWidget {
                                   .read<RatingBloc>()
                                   .state as SelectRatingState)
                               .selectedRating!;
-                          context
-                              .read<RatingBloc>()
-                              .add(NavigateToToQualities());
                           Navigator.push(
                             context,
                             MaterialPageRoute(

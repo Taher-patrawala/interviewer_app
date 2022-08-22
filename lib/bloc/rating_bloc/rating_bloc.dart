@@ -11,7 +11,8 @@ class RatingBloc extends Bloc<RatingEvent, RatingState> {
     });
 
     on<NavigateToToQualities>((event, emit) {
-      emit(SelectQualitiesState(qualities: []));
+      emit(SelectQualitiesState(
+          qualities: []));
     });
 
     on<UpdateQualities>((event, emit) {
