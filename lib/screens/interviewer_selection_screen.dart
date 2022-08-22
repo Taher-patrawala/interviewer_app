@@ -82,7 +82,7 @@ class InterviewerSelection extends StatelessWidget {
                   builder: (context, state) {
                     return Button(
                       isDisabled: ((state is InterviewerLoadedScreenState) &&
-                          state.selectedInterviewers!.length==0),
+                          state.selectedInterviewers!.length == 0),
                       onTap: () {
                         if ((state is InterviewerLoadedScreenState) &&
                             state.selectedInterviewers!.isNotEmpty) {
@@ -121,31 +121,41 @@ class InterviewerSelection extends StatelessWidget {
   }
 
   Widget _searchBar() {
-    return Material(
-      elevation: 6,
-      borderRadius: BorderRadius.circular(12),
-      child: TextFormField(
-        decoration: InputDecoration(
-            fillColor: AppColors.searchBackground,
-            filled: true,
-            hintText: "Search Interviewers",
-            hintStyle: TextStyle(
-                color: AppColors.infoColor.withOpacity(0.6),
-                fontWeight: FontWeight.w500),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.transparent)),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.transparent)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.transparent)),
-            suffixIcon: Icon(
-              Icons.search,
-              color: AppColors.dimGrey,
-            )),
-      ),
+    return BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+      builder: (context, state) {
+        return Material(
+          elevation: 6,
+          borderRadius: BorderRadius.circular(12),
+          child: TextField(
+            decoration: InputDecoration(
+              fillColor: AppColors.searchBackground,
+              filled: true,
+              hintText: "Search Interviewers",
+              hintStyle: TextStyle(
+                  color: AppColors.infoColor.withOpacity(0.6),
+                  fontWeight: FontWeight.w500),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Colors.transparent)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Colors.transparent)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Colors.transparent)),
+              suffixIcon: Icon(
+                Icons.search,
+                color: AppColors.dimGrey,
+              ),
+            ),
+            onChanged: (text) {
+              context
+                  .read<InterviewerBloc>()
+                  .add(FilterInterviewerList(filterName: text));
+            },
+          ),
+        );
+      },
     );
   }
 }

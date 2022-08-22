@@ -23,7 +23,7 @@ class RatingBloc extends Bloc<RatingEvent, RatingState> {
       } else {
         selectedQualities.add(event.quality);
       }
-      print(selectedQualities);
+      // print(selectedQualities);
       emit(SelectQualitiesState(qualities: selectedQualities));
     });
   }
