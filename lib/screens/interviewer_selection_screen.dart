@@ -12,62 +12,66 @@ class InterviewerSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Interviewers",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
-              ),
-              TextFormField(),
-              const SizedBox(height: 16),
-              BlocBuilder<InterviewerBloc, InterviewerScreenState>(
-                builder: (context, state) {
-                  if (state is InterviewerLoadedScreenState) {
-                    return Text(
-                        "${state.selectedInterviewers!.length} Added");
-                  }
-                  return const Text("0 Added");
-                },
-              ),
-              const SizedBox(height: 16),
-              BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+    return BlocProvider(
+      create: (context) => InterviewerBloc(),
+      child: Scaffold(
+        body: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Interviewers",
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800),
+                ),
+                TextFormField(),
+                const SizedBox(height: 16),
+                BlocBuilder<InterviewerBloc, InterviewerScreenState>(
                   builder: (context, state) {
-                if (state is InterviewerLoadingScreenState) {
-                  context.read<InterviewerBloc>().add(GetInterviewerList());
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is InterviewerLoadedScreenState) {
-                  return _buildBody(state.interviewers!);
-                } else if (state is InterviewerErrorScreenState) {
-                  return Center(
-                    child: Text(state.message.toString()),
-                  );
-                } else {
-                  return Container();
-                }
-              })
-            ],
+                    if (state is InterviewerLoadedScreenState) {
+                      return Text(
+                          "${state.selectedInterviewers!.length} Added");
+                    }
+                    return const Text("0 Added");
+                  },
+                ),
+                const SizedBox(height: 16),
+                BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+                    builder: (context, state) {
+                      if (state is InterviewerLoadingScreenState) {
+                        context.read<InterviewerBloc>().add(
+                            GetInterviewerList());
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is InterviewerLoadedScreenState) {
+                        return _buildBody(state.interviewers!);
+                      } else if (state is InterviewerErrorScreenState) {
+                        return Center(
+                          child: Text(state.message.toString()),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    })
+              ],
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const RatingsScreen()),
-          );
-        },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const RatingsScreen()),
+            );
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          icon: const Icon(Icons.chevron_right),
+          label: const Text("Next"),
         ),
-        icon: const Icon(Icons.chevron_right),
-        label: const Text("Next"),
       ),
     );
   }
