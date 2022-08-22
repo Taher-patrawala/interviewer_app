@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_event.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
+import 'package:interview_app/colors.dart';
 import 'package:interview_app/model/rating_model.dart';
 import 'package:interview_app/screens/qualities_screen.dart';
+import 'package:interview_app/screens/widgets/button.dart';
 
 class RatingsScreen extends StatelessWidget {
   const RatingsScreen({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class RatingsScreen extends StatelessWidget {
       create: (_) => RatingBloc(),
       child: MaterialApp(
         home: Scaffold(
+          backgroundColor: AppColors.scaffoldBackground,
           body: SafeArea(
             child: Stack(
               children: [
@@ -24,23 +27,23 @@ class RatingsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         "How would you rate your interviewer(s)?",
                         style: TextStyle(
-                          fontSize: 38,
-                          fontWeight: FontWeight.w700,
-                          height: 1.3,
-                        ),
+                            fontSize: 38,
+                            fontWeight: FontWeight.w700,
+                            height: 1.3,
+                            color: AppColors.titleColor),
                       ),
                       const SizedBox(height: 24),
-                      const Text(
-                        "Select your Rating",
+                      Text(
+                        "Select your Rating".toUpperCase(),
                         style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.infoColor),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 18),
                       GridView.builder(
                         shrinkWrap: true,
                         gridDelegate:
@@ -58,31 +61,48 @@ class RatingsScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  bottom: 12,
-                  right: 12,
-                  child: BlocBuilder<RatingBloc, RatingState>(
-                    builder: (context, state) {
-                      return FloatingActionButton.extended(
-                        onPressed: () {
-                          Rating selectedRating = (context
-                                  .read<RatingBloc>()
-                                  .state as SelectRatingState)
-                              .selectedRating!;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  QualitiesScreen(rating: selectedRating),
-                            ),
+                  bottom: 24,
+                  right: 24,
+                  left: 24,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "GO BACK",
+                          style:  TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline
+                          ),
+                        ),
+                      ),
+                      BlocBuilder<RatingBloc, RatingState>(
+                        builder: (context, state) {
+                          return Button(
+                            isDisabled: ((state is SelectRatingState) &&
+                                state.selectedRating!.id == -1),
+                            onTap: () {
+                              Rating selectedRating = (context
+                                      .read<RatingBloc>()
+                                      .state as SelectRatingState)
+                                  .selectedRating!;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      QualitiesScreen(rating: selectedRating),
+                                ),
+                              );
+                            },
                           );
                         },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        icon: const Icon(Icons.chevron_right),
-                        label: const Text("Next"),
-                      );
-                    },
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -148,38 +168,46 @@ class RatingsScreen extends StatelessWidget {
                     : Colors.transparent,
               ),
             ),
-            color: isSelected ? Colors.blue : Colors.transparent,
+            color: isSelected ? AppColors.ratingColor : Colors.transparent,
             margin: EdgeInsets.zero,
             elevation: isSelected ? 8 : 0,
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
+                    flex: 1,
                     child: Image.asset(
                       "assets/images/${rating.image}",
-                      // height: 74,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    rating.title ?? "",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: isSelected ? Colors.white : Colors.black,
+                  const SizedBox(height: 40),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          rating.title ?? "",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: isSelected ? Colors.white : Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          rating.description ?? "",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: isSelected ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    rating.description ?? "",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: isSelected ? Colors.white : Colors.black,
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),
