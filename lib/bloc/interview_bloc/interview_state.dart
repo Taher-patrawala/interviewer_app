@@ -10,13 +10,15 @@ class InterviewerLoadingScreenState extends InterviewerScreenState {
 
 class InterviewerLoadedScreenState extends InterviewerScreenState {
   final List<Response>? interviewers;
+  final List<String>? selectedInterviewers;
 
-  InterviewerLoadedScreenState({
+  InterviewerLoadedScreenState( {
     this.interviewers,
+    this.selectedInterviewers,
   });
 
   @override
-  List<Object?> get props => [interviewers];
+  List<Object?> get props => [interviewers,selectedInterviewers];
 }
 
 class InterviewerErrorScreenState extends InterviewerScreenState {

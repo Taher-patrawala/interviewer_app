@@ -11,10 +11,10 @@ class InterviewerSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider(
-        create: (context) => InterviewerBloc(),
-        child: SafeArea(
+    return BlocProvider(
+      create: (context) => InterviewerBloc(),
+      child: Scaffold(
+        body: SafeArea(
           child: Container(
             padding: EdgeInsets.only(top: 24, left: 16, right: 16),
             child: Column(
@@ -26,7 +26,15 @@ class InterviewerSelection extends StatelessWidget {
                 ),
                 TextFormField(),
                 const SizedBox(height: 16),
-                const Text("0 Added"),
+                BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+                  builder: (context, state) {
+                    if (state is InterviewerLoadedScreenState) {
+                      return Text(
+                          "${state.selectedInterviewers!.length} Added");
+                    }
+                    return const Text("0 Added");
+                  },
+                ),
                 const SizedBox(height: 16),
                 BlocBuilder<InterviewerBloc, InterviewerScreenState>(
                     builder: (context, state) {
@@ -49,15 +57,19 @@ class InterviewerSelection extends StatelessWidget {
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+        floatingActionButton:
+            BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+          builder: (context, state) {
+            return FloatingActionButton.extended(
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              icon: const Icon(Icons.chevron_right),
+              label: const Text("Next"),
+            );
+          },
         ),
-        
-        icon: const Icon(Icons.chevron_right),
-        label: const Text("Next"),
       ),
     );
   }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:interview_app/bloc/interview_bloc/interview_bloc.dart';
+import 'package:interview_app/bloc/interview_bloc/interview_event.dart';
+import 'package:interview_app/bloc/interview_bloc/interview_state.dart';
 import 'package:interview_app/model/response_model.dart';
 
 class InterviewerItem extends StatelessWidget {
@@ -34,7 +38,25 @@ class InterviewerItem extends StatelessWidget {
             ),
           ],
         ),
-        const Text("Add"),
+        BlocBuilder<InterviewerBloc, InterviewerScreenState>(
+          builder: (context, state) {
+            bool isSelected = false;
+            if (state is InterviewerLoadedScreenState) {
+              isSelected =
+                  state.selectedInterviewers!.contains(interviewer!.cell);
+            }
+            return InkWell(
+              onTap: () {
+                context.read<InterviewerBloc>().add(
+                      UpdateInterviewerToList(number: interviewer!.cell!),
+                    );
+              },
+              child: Text(
+                isSelected ? "Remove" : "Add",
+              ),
+            );
+          },
+        ),
       ],
     );
   }
