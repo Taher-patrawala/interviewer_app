@@ -6,6 +6,8 @@ import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
 import 'package:interview_app/colors.dart';
 import 'package:interview_app/model/qualities_model.dart';
 import 'package:interview_app/model/rating_model.dart';
+import 'package:interview_app/screens/feedback_screen.dart';
+import 'package:interview_app/screens/thankyou_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
 
 class QualitiesScreen extends StatefulWidget {
@@ -106,23 +108,27 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(Icons.comment_outlined),
-                          SizedBox(width: 8),
-                          Text(
+                    Row(
+                      children: [
+                        const Icon(Icons.comment_outlined),
+                        const SizedBox(width: 8),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const FeedbackScreen()));
+                          },
+                          child: const Text(
                             "ADD COMMENT",
                             style: TextStyle(
                                 fontSize: 16,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w700),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                     BlocBuilder<RatingBloc, RatingState>(
                       builder: (context, state) {
@@ -131,15 +137,10 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                           icon: Icons.check,
                           isDisabled: false,
                           onTap: () {
-                            Rating selectedRating = (context
-                                    .read<RatingBloc>()
-                                    .state as SelectRatingState)
-                                .selectedRating!;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    QualitiesScreen(rating: selectedRating),
+                                builder: (context) => const ThankYouScreen(),
                               ),
                             );
                           },
@@ -162,6 +163,9 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
       Qualities(id: 1, name: "Expertise"),
       Qualities(id: 2, name: "Guidance"),
       Qualities(id: 3, name: "Questions Asked"),
+      Qualities(id: 3, name: "Professionalism"),
+      Qualities(id: 3, name: "Attentiveness"),
+      Qualities(id: 3, name: "Quality of Question"),
     ];
   }
 
@@ -199,7 +203,7 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
             ],
           ),
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
             child: const Text(

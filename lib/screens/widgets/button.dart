@@ -12,8 +12,8 @@ class Button extends StatelessWidget {
     Key? key,
     required this.onTap,
     required this.isDisabled,
-     this.label = "NEXT",
-     this.icon = Icons.chevron_right,
+    this.label = "NEXT",
+    this.icon = Icons.chevron_right,
   }) : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class Button extends StatelessWidget {
         if (!isDisabled) onTap();
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
         decoration: BoxDecoration(
             color:
                 isDisabled ? AppColors.infoColor : AppColors.buttonBackground,
@@ -38,6 +38,7 @@ class Button extends StatelessWidget {
                   color: isDisabled ? AppColors.dimGrey : Colors.white,
                   fontSize: 18),
             ),
+            const SizedBox(width: 12),
             Icon(
               icon,
               color: isDisabled ? AppColors.dimGrey : Colors.white,
