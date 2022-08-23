@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_event.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
-import 'package:interview_app/colors.dart';
+import 'package:interview_app/constants/colors.dart';
+import 'package:interview_app/constants/static_data.dart';
 import 'package:interview_app/model/qualities_model.dart';
 import 'package:interview_app/model/rating_model.dart';
 import 'package:interview_app/screens/feedback_screen.dart';
@@ -91,7 +92,7 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                           ),
                           const SizedBox(height: 4),
                           Wrap(
-                            children: _buildChoiceList(_createQualities()),
+                            children: _buildChoiceList(StaticData.createQualities()),
                           )
                         ],
                       ),
@@ -157,17 +158,7 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
     );
   }
 
-  List<Qualities> _createQualities() {
-    return [
-      Qualities(id: 0, name: "Politeness"),
-      Qualities(id: 1, name: "Expertise"),
-      Qualities(id: 2, name: "Guidance"),
-      Qualities(id: 3, name: "Questions Asked"),
-      Qualities(id: 3, name: "Professionalism"),
-      Qualities(id: 3, name: "Attentiveness"),
-      Qualities(id: 3, name: "Quality of Question"),
-    ];
-  }
+
 
   _ratingCard(Rating rating) {
     return Padding(

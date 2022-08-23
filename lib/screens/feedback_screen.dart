@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interview_app/colors.dart';
+import 'package:interview_app/constants/colors.dart';
 import 'package:interview_app/screens/thankyou_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
 

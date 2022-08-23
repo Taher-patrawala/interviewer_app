@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interview_app/colors.dart';
+import 'package:interview_app/constants/colors.dart';
 import 'package:interview_app/screens/interviewer_selection_screen.dart';
 
 class ThankYouScreen extends StatelessWidget {

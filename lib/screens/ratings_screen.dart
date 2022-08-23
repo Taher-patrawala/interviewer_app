@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_event.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
-import 'package:interview_app/colors.dart';
+import 'package:interview_app/constants/colors.dart';
+import 'package:interview_app/constants/static_data.dart';
 import 'package:interview_app/model/rating_model.dart';
 import 'package:interview_app/screens/qualities_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
@@ -13,7 +14,7 @@ class RatingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Rating> rating = _createRatings();
+    List<Rating> rating = StaticData.createRatings();
     return BlocProvider(
       create: (_) => RatingBloc(),
       child: MaterialApp(
@@ -113,38 +114,6 @@ class RatingsScreen extends StatelessWidget {
     );
   }
 
-  List<Rating> _createRatings() {
-    return [
-      Rating(
-        id: 0,
-        title: "Awesome",
-        description: "Best Interview Ever",
-        image: "clap.png",
-        borderColor: Colors.indigo,
-      ),
-      Rating(
-        id: 1,
-        title: "Good",
-        description: "Nice Person.really Nice!",
-        image: "good.png",
-        borderColor: Colors.green,
-      ),
-      Rating(
-        id: 2,
-        title: "Neutral",
-        description: "Best Interview Ever",
-        image: "neutral.png",
-        borderColor: Colors.grey,
-      ),
-      Rating(
-        id: 3,
-        title: "Bad",
-        description: "Best Interview Ever",
-        image: "sad.png",
-        borderColor: Colors.redAccent,
-      ),
-    ];
-  }
 
   Widget _ratingCard(Rating rating, int index) {
     return BlocBuilder<RatingBloc, RatingState>(

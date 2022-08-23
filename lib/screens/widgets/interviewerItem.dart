@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_bloc.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_event.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_state.dart';
-import 'package:interview_app/colors.dart';
+import 'package:interview_app/constants/colors.dart';
 import 'package:interview_app/model/response_model.dart';
 
 class InterviewerItem extends StatelessWidget {

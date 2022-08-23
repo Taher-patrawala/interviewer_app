@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_event.dart';
 import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
+import 'package:interview_app/constants/static_data.dart';
 import 'package:interview_app/model/qualities_model.dart';
 import 'package:interview_app/model/rating_model.dart';
 
 class RatingBloc extends Bloc<RatingEvent, RatingState> {
-  RatingBloc() : super(SelectRatingState(selectedRating: Rating(id: -1))) {
+  RatingBloc() : super(SelectRatingState(selectedRating: StaticData.createRatings()[0])) {
     on<SelectRating>((event, emit) {
       emit(SelectRatingState(selectedRating: event.selectedRating));
     });
