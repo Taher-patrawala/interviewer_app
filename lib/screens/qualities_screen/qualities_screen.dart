@@ -10,7 +10,7 @@ import 'package:interview_app/model/rating_model.dart';
 import 'package:interview_app/screens/feedback_screen/feedback_screen.dart';
 import 'package:interview_app/screens/qualities_screen/qualities_chip.dart';
 import 'package:interview_app/screens/qualities_screen/qualities_rating_card.dart';
-import 'package:interview_app/screens/thankyou_screen.dart';
+import 'package:interview_app/screens/thankyou_screen/thankyou_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
 
 class QualitiesScreen extends StatefulWidget {

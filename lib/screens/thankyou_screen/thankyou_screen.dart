@@ -10,7 +10,7 @@ class ThankYouScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: Container(
-        padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
+        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -54,13 +54,12 @@ class ThankYouScreen extends StatelessWidget {
                             builder: (context) =>
                                 const InterviewerSelection()));
                   },
-                  child: Text(
+                  child: const Text(
                     "HOME",
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.underline
-                    ),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline),
                   ),
                 ),
                 Image.asset(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interview_app/constants/colors.dart';
-import 'package:interview_app/screens/thankyou_screen.dart';
+import 'package:interview_app/screens/thankyou_screen/thankyou_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
 
 class FeedbackScreen extends StatelessWidget {
