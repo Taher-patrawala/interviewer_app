@@ -24,7 +24,7 @@ class InterviewerBloc extends Bloc<InterviewerEvent, InterviewerScreenState> {
     on<FilterInterviewerList>((event, emit) async {
       List<Response>? filteredList = interviewerList;
       filteredList = interviewerList!
-          .where((element) => element.name!.firstName!.contains(event.filterName!))
+          .where((element) => element.name!.firstName!.toLowerCase().contains(event.filterName!.toLowerCase()))
           .toList();
       // print(filteredList);
       if (event.filterName == null || event.filterName!.isEmpty) {
@@ -37,14 +37,14 @@ class InterviewerBloc extends Bloc<InterviewerEvent, InterviewerScreenState> {
     });
 
     on<UpdateInterviewerToList>((event, emit) async {
-      List<String> selectedInterviewers = List.from(
+      List<Response> selectedInterviewers = List.from(
           (state as InterviewerLoadedScreenState)
               .selectedInterviewers!
               .toList());
-      if (selectedInterviewers.contains(event.number)) {
-        selectedInterviewers.remove(event.number);
+      if (selectedInterviewers.contains(event.interviewer)) {
+        selectedInterviewers.remove(event.interviewer);
       } else {
-        selectedInterviewers.add(event.number);
+        selectedInterviewers.add(event.interviewer);
       }
       // print(selectedInterviewers);
       emit(InterviewerLoadedScreenState(

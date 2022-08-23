@@ -1,3 +1,5 @@
+import 'package:interview_app/model/response_model.dart';
+
 abstract class InterviewerEvent {
   const InterviewerEvent();
 }
@@ -11,7 +13,8 @@ class FilterInterviewerList extends InterviewerEvent {
 }
 
 class UpdateInterviewerToList extends InterviewerEvent {
-  final String number;
+  // final String number;
+  final Response interviewer;
 
-  UpdateInterviewerToList({required this.number});
+  UpdateInterviewerToList({required this.interviewer});
 }

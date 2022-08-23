@@ -27,7 +27,7 @@ class InterviewerItem extends StatelessWidget {
                 bool isSelected = false;
                 if (state is InterviewerLoadedScreenState) {
                   isSelected =
-                      state.selectedInterviewers!.contains(interviewer!.cell);
+                      state.selectedInterviewers!.contains(interviewer!);
                 }
                 return Text(
                   interviewer!.name!.firstName ?? "",
@@ -54,12 +54,12 @@ class InterviewerItem extends StatelessWidget {
             bool isSelected = false;
             if (state is InterviewerLoadedScreenState) {
               isSelected =
-                  state.selectedInterviewers!.contains(interviewer!.cell);
+                  state.selectedInterviewers!.contains(interviewer!);
             }
             return InkWell(
               onTap: () {
                 context.read<InterviewerBloc>().add(
-                      UpdateInterviewerToList(number: interviewer!.cell!),
+                      UpdateInterviewerToList(interviewer: interviewer!),
                     );
               },
               child: Text(

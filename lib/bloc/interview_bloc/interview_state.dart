@@ -10,7 +10,7 @@ class InterviewerLoadingScreenState extends InterviewerScreenState {
 
 class InterviewerLoadedScreenState extends InterviewerScreenState {
   final List<Response>? interviewers;
-  final List<String>? selectedInterviewers;
+  final List<Response>? selectedInterviewers;
 
   InterviewerLoadedScreenState( {
     this.interviewers,
