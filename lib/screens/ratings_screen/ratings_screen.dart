@@ -6,7 +6,8 @@ import 'package:interview_app/bloc/rating_bloc/rating_state.dart';
 import 'package:interview_app/constants/colors.dart';
 import 'package:interview_app/constants/static_data.dart';
 import 'package:interview_app/model/rating_model.dart';
-import 'package:interview_app/screens/qualities_screen.dart';
+import 'package:interview_app/screens/qualities_screen/qualities_screen.dart';
+import 'package:interview_app/screens/ratings_screen/ratings_card.dart';
 import 'package:interview_app/screens/widgets/button.dart';
 
 class RatingsScreen extends StatelessWidget {
@@ -70,16 +71,15 @@ class RatingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: const Text(
                           "GO BACK",
-                          style:  TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline
-                          ),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline),
                         ),
                       ),
                       BlocBuilder<RatingBloc, RatingState>(
@@ -114,7 +114,6 @@ class RatingsScreen extends StatelessWidget {
     );
   }
 
-
   Widget _ratingCard(Rating rating, int index) {
     return BlocBuilder<RatingBloc, RatingState>(
       builder: (context, state) {
@@ -128,58 +127,9 @@ class RatingsScreen extends StatelessWidget {
                 .read<RatingBloc>()
                 .add(SelectRating(selectedRating: rating));
           },
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-              side: BorderSide(
-                color: !isSelected
-                    ? rating.borderColor ?? Colors.transparent
-                    : Colors.transparent,
-              ),
-            ),
-            color: isSelected ? AppColors.ratingColor : Colors.transparent,
-            margin: EdgeInsets.zero,
-            elevation: isSelected ? 8 : 0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset(
-                      "assets/images/${rating.image}",
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          rating.title ?? "",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: isSelected ? Colors.white : Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          rating.description ?? "",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: isSelected ? Colors.white : Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+          child: RatingCard(
+            isSelected: isSelected,
+            rating: rating,
           ),
         );
       },

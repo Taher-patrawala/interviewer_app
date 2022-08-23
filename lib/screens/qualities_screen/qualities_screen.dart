@@ -7,7 +7,9 @@ import 'package:interview_app/constants/colors.dart';
 import 'package:interview_app/constants/static_data.dart';
 import 'package:interview_app/model/qualities_model.dart';
 import 'package:interview_app/model/rating_model.dart';
-import 'package:interview_app/screens/feedback_screen.dart';
+import 'package:interview_app/screens/feedback_screen/feedback_screen.dart';
+import 'package:interview_app/screens/qualities_screen/qualities_chip.dart';
+import 'package:interview_app/screens/qualities_screen/qualities_rating_card.dart';
 import 'package:interview_app/screens/thankyou_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
 
@@ -26,7 +28,6 @@ class QualitiesScreen extends StatefulWidget {
 class _QualitiesScreenState extends State<QualitiesScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<RatingBloc>().add(NavigateToToQualities());
   }
@@ -68,7 +69,9 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                           elevation: 8,
                           margin: EdgeInsets.zero,
                           color: AppColors.ratingColor,
-                          child: _ratingCard(widget.rating),
+                          child: QualitiesRatingCard(
+                            rating: widget.rating,
+                          ),
                         ),
                       ],
                     ),
@@ -92,7 +95,8 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
                           ),
                           const SizedBox(height: 4),
                           Wrap(
-                            children: _buildChoiceList(StaticData.createQualities()),
+                            children:
+                                _buildChoiceList(StaticData.createQualities()),
                           )
                         ],
                       ),
@@ -158,103 +162,12 @@ class _QualitiesScreenState extends State<QualitiesScreen> {
     );
   }
 
-
-
-  _ratingCard(Rating rating) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            "assets/images/${rating.image}",
-            height: 48,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                rating.title ?? "",
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                rating.description ?? "",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Text(
-              "CHANGE",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   _buildChoiceList(List<Qualities> qualities) {
     List<Widget> choices = [];
     for (var item in qualities) {
       choices.add(
-        BlocBuilder<RatingBloc, RatingState>(
-          builder: (context, state) {
-            bool isSelected = false;
-            isSelected = state is SelectQualitiesState &&
-                (state as SelectQualitiesState).qualities.contains(item);
-
-            return Container(
-              padding: const EdgeInsets.all(2.0),
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              child: ChoiceChip(
-                label: Text(
-                  item.name!,
-                  style: TextStyle(
-                    color: isSelected
-                        ? AppColors.selectedBorderGreen
-                        : AppColors.dimGrey,
-                  ),
-                ),
-                selected: isSelected,
-                onSelected: (selected) {
-                  if (state is SelectQualitiesState) {
-                    context
-                        .read<RatingBloc>()
-                        .add(UpdateQualities(quality: item));
-                  }
-                },
-                backgroundColor: AppColors.scaffoldBackground,
-                selectedColor: AppColors.selectedGreen,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  side: BorderSide(
-                    width: 1.5,
-                    color: isSelected
-                        ? AppColors.selectedBorderGreen
-                        : AppColors.dimGrey.withOpacity(0.5),
-                  ),
-                ),
-              ),
-            );
-          },
+        QualitiesChip(
+          item: item,
         ),
       );
     }

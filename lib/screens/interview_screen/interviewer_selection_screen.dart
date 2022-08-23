@@ -5,7 +5,7 @@ import 'package:interview_app/bloc/interview_bloc/interview_event.dart';
 import 'package:interview_app/bloc/interview_bloc/interview_state.dart';
 import 'package:interview_app/constants/colors.dart';
 import 'package:interview_app/model/response_model.dart';
-import 'package:interview_app/screens/ratings_screen.dart';
+import 'package:interview_app/screens/ratings_screen/ratings_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
 import 'package:interview_app/screens/interview_screen/interviewerItem.dart';
 
