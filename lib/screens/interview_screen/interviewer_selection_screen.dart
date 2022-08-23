@@ -7,7 +7,7 @@ import 'package:interview_app/constants/colors.dart';
 import 'package:interview_app/model/response_model.dart';
 import 'package:interview_app/screens/ratings_screen.dart';
 import 'package:interview_app/screens/widgets/button.dart';
-import 'package:interview_app/screens/widgets/interviewerItem.dart';
+import 'package:interview_app/screens/interview_screen/interviewerItem.dart';
 
 class InterviewerSelection extends StatelessWidget {
   const InterviewerSelection({Key? key}) : super(key: key);

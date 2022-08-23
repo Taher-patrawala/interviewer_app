@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:interview_app/constants/colors.dart';
-import 'package:interview_app/screens/interviewer_selection_screen.dart';
+import 'package:interview_app/screens/interview_screen/interviewer_selection_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

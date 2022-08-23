@@ -9,47 +9,51 @@ class InterviewerBloc extends Bloc<InterviewerEvent, InterviewerScreenState> {
   List<Response>? interviewerList = [];
 
   InterviewerBloc() : super(InterviewerLoadingScreenState()) {
-    on<GetInterviewerList>((event, emit) async {
-      try {
-        interviewerList = await repo.getInterviewerList();
-        emit(InterviewerLoadedScreenState(
-            interviewers: interviewerList, selectedInterviewers: []));
-      } catch (e) {
-        // print(e);
-        emit(InterviewerErrorScreenState(
-            message: "Error occurred while fetching data!"));
-      }
-    });
+    on<GetInterviewerList>(_getInterviewersList);
+    on<FilterInterviewerList>(_getFilteredInterviewerList);
+    on<UpdateInterviewerToList>(_updateSelectedInterviewerList);
+  }
 
-    on<FilterInterviewerList>((event, emit) async {
-      List<Response>? filteredList = interviewerList;
-      filteredList = interviewerList!
-          .where((element) => element.name!.firstName!.toLowerCase().contains(event.filterName!.toLowerCase()))
-          .toList();
-      // print(filteredList);
-      if (event.filterName == null || event.filterName!.isEmpty) {
-        filteredList = interviewerList;
-      }
+  void _getInterviewersList(
+      GetInterviewerList event, Emitter<InterviewerScreenState> emit) async {
+    try {
+      interviewerList = await repo.getInterviewerList();
       emit(InterviewerLoadedScreenState(
-          interviewers: filteredList,
-          selectedInterviewers:
-              (state as InterviewerLoadedScreenState).selectedInterviewers));
-    });
+          interviewers: interviewerList, selectedInterviewers: []));
+    } catch (e) {
+      emit(InterviewerErrorScreenState(
+          message: "Error occurred while fetching data!"));
+    }
+  }
 
-    on<UpdateInterviewerToList>((event, emit) async {
-      List<Response> selectedInterviewers = List.from(
-          (state as InterviewerLoadedScreenState)
-              .selectedInterviewers!
-              .toList());
-      if (selectedInterviewers.contains(event.interviewer)) {
-        selectedInterviewers.remove(event.interviewer);
-      } else {
-        selectedInterviewers.add(event.interviewer);
-      }
-      // print(selectedInterviewers);
-      emit(InterviewerLoadedScreenState(
-          interviewers: (state as InterviewerLoadedScreenState).interviewers,
-          selectedInterviewers: selectedInterviewers));
-    });
+  void _getFilteredInterviewerList(
+      FilterInterviewerList event, Emitter<InterviewerScreenState> emit) async {
+    List<Response>? filteredList = interviewerList;
+    filteredList = interviewerList!
+        .where((element) => element.name!.firstName!
+            .toLowerCase()
+            .contains(event.filterName!.toLowerCase()))
+        .toList();
+    if (event.filterName == null || event.filterName!.isEmpty) {
+      filteredList = interviewerList;
+    }
+    emit(InterviewerLoadedScreenState(
+        interviewers: filteredList,
+        selectedInterviewers:
+            (state as InterviewerLoadedScreenState).selectedInterviewers));
+  }
+
+  void _updateSelectedInterviewerList(UpdateInterviewerToList event,
+      Emitter<InterviewerScreenState> emit) async {
+    List<Response> selectedInterviewers = List.from(
+        (state as InterviewerLoadedScreenState).selectedInterviewers!.toList());
+    if (selectedInterviewers.contains(event.interviewer)) {
+      selectedInterviewers.remove(event.interviewer);
+    } else {
+      selectedInterviewers.add(event.interviewer);
+    }
+    emit(InterviewerLoadedScreenState(
+        interviewers: (state as InterviewerLoadedScreenState).interviewers,
+        selectedInterviewers: selectedInterviewers));
   }
 }
